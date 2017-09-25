@@ -37,7 +37,6 @@ class Edge(tuple):
     __str__ = __repr__
     """The str and repr forms of this object are the same."""
 
-
 class Graph(dict):
     """A Graph is a dictionary of dictionaries.  The outer
     dictionary maps from a vertex to an inner dictionary.
@@ -106,40 +105,26 @@ class Graph(dict):
             self.add_edge(Edge(pair[0],pair[1]))
 
     def add_regular_edges(self, degree):
-        #check conditions of graph
         k = degree
         n = len(self.vertices())
+        vertex_range = int((k-1)/2)
+        if k%2 == 0: #if even..
+            vertex_range = int(k/2)
+        #condition from wikipedia
         if ( n*k%2 == 0 and n >= k + 1 ):
             verts = self.vertices()
-            #For even degrees, connect to nearest neighbor
-            if k%2 == 0:
-                for index,v in enumerate(verts):
-                    for nn_idx in range(int(-k/2), int(k/2)):
-                        if(nn_idx !=0):
-                            nn = index+nn_idx
-                            if nn >= n:
-                                nn = nn % n
-                            print(nn)
-                            edge = Edge(v, verts[nn])
-                            self.add_edge(edge)
-            else:
-                for index,v in enumerate(verts):
-                    for nn_idx in range(int(-(k-1)/2), int((k-1)/2)):
-                        if(nn_idx ==0):
-                            nn_idx = int(n/2)
+            for index,v in enumerate(verts):
+                for nn_idx in range(-vertex_range,vertex_range):
+                    if(k%2 != 0 and nn_idx ==0):
+                        nn_idx = int(n/2)
+                    if(nn_idx != 0):
                         nn = index+nn_idx
                         if nn >= n:
                             nn = nn % n
                         edge = Edge(v, verts[nn])
                         self.add_edge(edge)
-
         else:
             return "Condition not met for regular graph"
-
-
-
-
-
 
 def main(script, *args):
     v = Vertex('v')

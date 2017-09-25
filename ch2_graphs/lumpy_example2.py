@@ -1,1 +1,1 @@
-/home/z3/thinkcomplexity/ThinkComplexity/ch2_graphs/swampy-2.1.5/lumpy_example2.py
+/home/erik/learning_material/think_complexity/ch2_graphs/swampy-2.1.5/lumpy_example2.py
