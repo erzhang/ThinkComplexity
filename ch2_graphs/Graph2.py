@@ -72,58 +72,17 @@ class Graph(dict):
         self[w][v] = e
 
     def get_edge(self, v, w):
-        """Takes 2 vertices v and w and returns edge e if it exists"""
-        try:
-            e = self[v][w]
-            return e
-        except:
-            return None
-
-    def remove_edge(self, e):
-        """Takes an edge and removes all refrences to it from the graph"""
-        for v, self_v in dict(self).items():
-            for w, vw_e in dict(self_v).items():
-                if(vw_e == e):
-                    del self[v][w]
-                
-    def vertices(self):
-        return list(self.keys())
-
-    def edges(self):
-        list_of_edges = []
-        for v, self_v in dict(self).items():
-            for w, vw_e in dict(self_v).items():
-                list_of_edges.append(vw_e)
-        return list_of_edges
-
-    def out_edges(self, v):
-        return list(self[v].values())
-
-    def add_all_edges(self):
-        verts = self.vertices()
-        tuples = [(v,w) for v in verts for w in verts if v != w]
-        for pair in tuples:
-            self.add_edge(Edge(pair[0],pair[1]))
 
 
 
 def main(script, *args):
     v = Vertex('v')
+    print(v)
     w = Vertex('w')
+    print(w)
     e = Edge(v, w)
-    x = Vertex('x')
-    y = Vertex('y')
-    z = Edge(x,y)
-    g = Graph([v,w,x,y], [e,z])
-    print(g.get_edge(x,v))
-    print(g.get_edge(x,y))
-    print(g)
-    print("removing edge \n")
-    g.remove_edge(z)
-    g.remove_edge(e)
-    print(g)
-    print("adding all edges back")
-    g.add_all_edges()
+    print(e)
+    g = Graph([v,w], [e])
     print(g)
 
 

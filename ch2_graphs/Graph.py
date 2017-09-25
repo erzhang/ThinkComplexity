@@ -65,24 +65,99 @@ class Graph(dict):
         """Adds and edge to the graph by adding an entry in both directions.
 
         If there is already an edge connecting these Vertices, the
-        new edge replaces it.
+        new edge replaces it
         """
         v, w = e
         self[v][w] = e
         self[w][v] = e
 
     def get_edge(self, v, w):
+        """Takes 2 vertices v and w and returns edge e if it exists"""
+        try:
+            e = self[v][w]
+            return e
+        except:
+            return None
+
+    def remove_edge(self, e):
+        """Takes an edge and removes all refrences to it from the graph"""
+        for v, self_v in dict(self).items():
+            for w, vw_e in dict(self_v).items():
+                if(vw_e == e):
+                    del self[v][w]
+                
+    def vertices(self):
+        return list(self.keys())
+
+    def edges(self):
+        list_of_edges = []
+        for v, self_v in dict(self).items():
+            for w, vw_e in dict(self_v).items():
+                list_of_edges.append(vw_e)
+        return list_of_edges
+
+    def out_edges(self, v):
+        return list(self[v].values())
+
+    def add_all_edges(self):
+        verts = self.vertices()
+        tuples = [(v,w) for v in verts for w in verts if v != w]
+        for pair in tuples:
+            self.add_edge(Edge(pair[0],pair[1]))
+
+    def add_regular_edges(self, degree):
+        #check conditions of graph
+        k = degree
+        n = len(self.vertices())
+        if ( n*k%2 == 0 and n >= k + 1 ):
+            verts = self.vertices()
+            #For even degrees, connect to nearest neighbor
+            if k%2 == 0:
+                for index,v in enumerate(verts):
+                    for nn_idx in range(int(-k/2), int(k/2)):
+                        if(nn_idx !=0):
+                            nn = index+nn_idx
+                            if nn >= n:
+                                nn = nn % n
+                            print(nn)
+                            edge = Edge(v, verts[nn])
+                            self.add_edge(edge)
+            else:
+                for index,v in enumerate(verts):
+                    for nn_idx in range(int(-(k-1)/2), int((k-1)/2)):
+                        if(nn_idx ==0):
+                            nn_idx = int(n/2)
+                        nn = index+nn_idx
+                        if nn >= n:
+                            nn = nn % n
+                        edge = Edge(v, verts[nn])
+                        self.add_edge(edge)
+
+        else:
+            return "Condition not met for regular graph"
+
+
+
 
 
 
 def main(script, *args):
     v = Vertex('v')
-    print(v)
     w = Vertex('w')
-    print(w)
     e = Edge(v, w)
-    print(e)
-    g = Graph([v,w], [e])
+    x = Vertex('x')
+    y = Vertex('y')
+    z = Edge(x,y)
+    g = Graph([v,w,x,y], [e,z])
+    print(g.get_edge(x,v))
+    print(g.get_edge(x,y))
+    print(g)
+    print("removing edge \n")
+    g.remove_edge(z)
+    g.remove_edge(e)
+    print(g)
+    print("adding all edges back")
+    g.add_all_edges()
     print(g)
 
 
