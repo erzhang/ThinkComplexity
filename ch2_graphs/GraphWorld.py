@@ -193,7 +193,7 @@ def main(script, n='6', *args):
 
     # create a graph and a layout
     g = RandomGraph(vs)
-    g.add_random_edge(2)
+    g.add_random_edge(0.8)
     layout = CircleLayout(g)
 
     # draw the graph
@@ -201,6 +201,7 @@ def main(script, n='6', *args):
     gw.show_graph(g, layout)
     gw.mainloop()
 
+    print(g.is_connected())
 
 if __name__ == '__main__':
     import sys

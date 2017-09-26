@@ -6,6 +6,7 @@ http://greenteapress.com/complexity
 Copyright 2011 Allen B. Downey.
 Distributed under the GNU General Public License at gnu.org/licenses/gpl.html.
 """
+from queue import Queue
 
 class Vertex(object):
     """A Vertex is a node in a graph."""
@@ -125,6 +126,21 @@ class Graph(dict):
                         self.add_edge(edge)
         else:
             return "Condition not met for regular graph"
+    
+    def is_connected(self):
+        """ BFS algorithm used to check if graph is connected"""
+        visited = set()
+        to_check = Queue()
+        first_vertex = self.vertices()
+        to_check.put(first_vertex[0])
+        while not to_check.empty():
+            v = to_check.get()
+            visited.add(v);
+            add_q = [to_check.put(q) for q in list(self[v].keys()) if q not in
+                    visited]
+        return len(visited) == len(self.vertices())
+
+
 
 def main(script, *args):
     v = Vertex('v')
